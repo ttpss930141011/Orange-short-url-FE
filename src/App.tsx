@@ -1,34 +1,51 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
+import { useState, useEffect } from 'react'
+import { getBrowserLang } from '@/utils/util'
+import { ConfigProvider } from 'antd'
+import { connect } from 'react-redux'
+import { setLanguage } from '@/redux/modules/global/action'
+import { HashRouter } from 'react-router-dom'
+import AuthRouter from '@/routers/utils/authRouter'
+import Router from '@/routers/index'
+import useTheme from '@/hooks/useTheme'
+import zhTW from 'antd/lib/locale/zh_TW'
+import enUS from 'antd/lib/locale/en_US'
+import i18n from 'i18next'
 import './App.css'
+import 'moment/dist/locale/zh-tw'
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = (props: any) => {
+  const { language, assemblySize, themeConfig, setLanguage } = props
+  const [i18nLocale, setI18nLocale] = useState(zhTW)
+  // 全局使用主题
+  useTheme(themeConfig)
+  // 设置 antd 语言国际化
+  const setAntdLanguage = () => {
+    // 如果 redux 中有默认语言就设置成 redux 的默认语言，没有默认语言就设置成浏览器默认语言
+    if (language && language == 'zh') return setI18nLocale(zhTW)
+    if (language && language == 'en') return setI18nLocale(enUS)
+    if (getBrowserLang() == 'zh') return setI18nLocale(zhTW)
+    if (getBrowserLang() == 'en') return setI18nLocale(enUS)
+  }
+
+  useEffect(() => {
+    // 全局使用国际化
+    i18n.changeLanguage(language || getBrowserLang())
+    setLanguage(language || getBrowserLang())
+    setAntdLanguage()
+  }, [language])
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
+    <HashRouter>
+      <ConfigProvider locale={i18nLocale} componentSize={assemblySize}>
+        <AuthRouter>
+          <Router />
+        </AuthRouter>
+      </ConfigProvider>
+    </HashRouter>
   )
 }
 
-export default App
+const mapStateToProps = (state: any) => state.global
+const mapDispatchToProps = { setLanguage }
+console.log(mapDispatchToProps)
+export default connect(mapStateToProps, mapDispatchToProps)(App)
