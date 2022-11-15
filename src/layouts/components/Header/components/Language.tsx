@@ -10,7 +10,7 @@ const Language = (props: any) => {
       items={[
         {
           key: '1',
-          label: <span>简体中文</span>,
+          label: <span>繁體中文</span>,
           onClick: () => setLanguage('zh'),
           disabled: language === 'zh'
         },

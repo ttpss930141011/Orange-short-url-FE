@@ -21,10 +21,13 @@ const AuthRouter = (props: { children: JSX.Element }) => {
 
   // * 判断是否有Token
   const token = store.getState().global.token
+  console.log(token)
   if (!token) return <Navigate to="/login" replace />
 
   // * Dynamic Router(动态路由，根据后端返回的菜单数据生成的一维数组)
-  const dynamicRouter = store.getState().auth.authRouter
+  // const dynamicRouter = store.getState().auth.authRouter
+  const dynamicRouter: any[] = []
+  // console.log(dynamicRouter)
   // * Static Router(静态路由，必须配置首页地址，否则不能进首页获取菜单、按钮权限等数据)，获取数据的时候会loading，所有配置首页地址也没问题
   const staticRouter = [HOME_URL, '/403']
   const routerList = dynamicRouter.concat(staticRouter)

@@ -10,7 +10,6 @@ import useTheme from '@/hooks/useTheme'
 import zhTW from 'antd/lib/locale/zh_TW'
 import enUS from 'antd/lib/locale/en_US'
 import i18n from 'i18next'
-import './App.css'
 import 'moment/dist/locale/zh-tw'
 
 const App = (props: any) => {

@@ -3,15 +3,13 @@ import { useState } from 'react'
 import { connect } from 'react-redux'
 import { FireOutlined, SettingOutlined } from '@ant-design/icons'
 import { setThemeConfig } from '@/redux/modules/global/action'
-import { updateCollapse } from '@/redux/modules/menu/action'
 import SwitchDark from '@/components/SwitchDark'
 
 const Theme = (props: any) => {
   const [visible, setVisible] = useState<boolean>(false)
-  const { setThemeConfig, updateCollapse } = props
-  const { isCollapse } = props.menu
+  const { setThemeConfig } = props
   const { themeConfig } = props.global
-  const { weakOrGray, breadcrumb, tabs, footer } = themeConfig
+  const { weakOrGray, footer } = themeConfig
 
   const setWeakOrGray = (checked: boolean, theme: string) => {
     if (checked) return setThemeConfig({ ...themeConfig, weakOrGray: theme })
@@ -31,7 +29,7 @@ const Theme = (props: any) => {
         }}
       ></i>
       <Drawer
-        title="布局设置"
+        title="佈局設置"
         closable={false}
         onClose={() => {
           setVisible(false)
@@ -39,10 +37,10 @@ const Theme = (props: any) => {
         visible={visible}
         width={320}
       >
-        {/* 全局主题 */}
+        {/* 全局主題 */}
         <Divider className="divider">
           <FireOutlined />
-          全局主题
+          全局主題
         </Divider>
         <div className="theme-item">
           <span>暗黑模式</span>
@@ -67,40 +65,14 @@ const Theme = (props: any) => {
           />
         </div>
         <br />
-        {/* 界面设置 */}
+        {/* 界面設置 */}
         <Divider className="divider">
           <SettingOutlined />
-          界面设置
+          界面設置
         </Divider>
+
         <div className="theme-item">
-          <span>折叠菜单</span>
-          <Switch
-            checked={isCollapse}
-            onChange={(e) => {
-              updateCollapse(e)
-            }}
-          />
-        </div>
-        <div className="theme-item">
-          <span>面包屑导航</span>
-          <Switch
-            checked={!breadcrumb}
-            onChange={(e) => {
-              onChange(e, 'breadcrumb')
-            }}
-          />
-        </div>
-        <div className="theme-item">
-          <span>标签栏</span>
-          <Switch
-            checked={!tabs}
-            onChange={(e) => {
-              onChange(e, 'tabs')
-            }}
-          />
-        </div>
-        <div className="theme-item">
-          <span>页脚</span>
+          <span>頁腳</span>
           <Switch
             checked={!footer}
             onChange={(e) => {
@@ -114,5 +86,5 @@ const Theme = (props: any) => {
 }
 
 const mapStateToProps = (state: any) => state
-const mapDispatchToProps = { setThemeConfig, updateCollapse }
+const mapDispatchToProps = { setThemeConfig }
 export default connect(mapStateToProps, mapDispatchToProps)(Theme)

@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 const AssemblySize = (props: any) => {
   const { assemblySize, setAssemblySize } = props
 
-  // 切换组件大小
+  // 切換組件大小
   const onClick = (e: MenuInfo) => {
     setAssemblySize(e.key)
   }
@@ -16,7 +16,7 @@ const AssemblySize = (props: any) => {
         {
           key: 'middle',
           disabled: assemblySize == 'middle',
-          label: <span>默认</span>,
+          label: <span>默認</span>,
           onClick
         },
         {

@@ -26,11 +26,11 @@ export interface ReqPage {
 // * 登录
 export namespace Login {
   export interface ReqLoginForm {
-    username: string
-    password: string
+    user_name: string
+    pass: string
   }
   export interface ResLogin {
-    access_token: string
+    token: string
   }
   export interface ResAuthButtons {
     [propName: string]: any
